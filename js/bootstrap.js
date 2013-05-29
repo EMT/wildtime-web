@@ -9,7 +9,13 @@ $(function(){
 	
 	$('#content').on('click', '.links-list a', function(e) {
 		e.preventDefault();
-		$(this).children('ul').slideDown();
+		var $sublist = $(this).children('ul');
+		if ($sublist.css('display') === 'none') {
+			$(this).children('ul').slideDown();
+		}
+		else {
+			$(this).children('ul').slideUp();
+		}
 	});
 	
 	
