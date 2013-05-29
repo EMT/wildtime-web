@@ -7,6 +7,11 @@ $(function(){
 	
 	wildtime.loadTimeframes();
 	
+	$('#content').on('click', '.links-list a', function(e) {
+		e.preventDefault();
+		$(this).children('ul').slideDown();
+	});
+	
 	
 });
 
@@ -24,11 +29,11 @@ var wildtime = {
 			}
 			for (var i in data.timeframes) {
 				context.items.push({
-					url: '/activities/view/' + i,
-					text: data.timeframes[i].human
+					url: '/timeframes/' + i + '/activities',
+					text: data.timeframes[i].human,
+					activities: data.timeframes[i].activities
 				});
 			}
-		console.log(context.items);
 			var template = Handlebars.compile($('#template-links-list').html());
 			$('#content').html(template(context));
 		};
@@ -37,13 +42,23 @@ var wildtime = {
 	
 	loadActivities: function(timeframe_id) {
 		var callback = function(data) {
-			
+			var context = {
+				items: []
+			}
+			for (var i in data.activities) {
+				context.items.push({
+					url: '/activities/view/' + i,
+					text: data.activities[i].title
+				});
+			}
+			var template = Handlebars.compile($('#template-links-list').html());
+			$('#content').html(template(context));
 		};
 		wildtime.getActivities(timeframe_id, callback);
 	},
 	
 	getTimeframes: function(callback) {
-		$.getJSON(wildtime.url_base + '/timeframes.jsonp?callback=?', function(data) {
+		$.getJSON(wildtime.url_base + '/timeframes.jsonp?with=Activities&callback=?', function(data) {
 			callback(data);
 		});
 	},
