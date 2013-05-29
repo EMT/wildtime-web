@@ -7,15 +7,23 @@ $(function(){
 	
 	wildtime.loadTimeframes();
 	
-	$('#content').on('click', '.links-list a', function(e) {
+	$('#content').on('click', '.links-list > li > a', function(e) {
 		e.preventDefault();
-		var $sublist = $(this).children('ul');
+		var $sublist = $(this).siblings('.links-sub-list');
 		if ($sublist.css('display') === 'none') {
-			$(this).children('ul').slideDown();
+			$sublist.slideDown(500);
 		}
 		else {
-			$(this).children('ul').slideUp();
+			$sublist.slideUp(500);
 		}
+	});
+	
+	$('#content').on('click', '.links-sub-list > li > a', function(e) {
+		e.preventDefault();
+	console.log($(this).attr('href'));
+	console.log($(this).attr('href').split('/')[3]);
+		var activity_id = $(this).attr('href').split('/')[3];
+		wildtime.loadActivity(activity_id);
 	});
 	
 	
@@ -25,8 +33,8 @@ $(function(){
 
 var wildtime = {
 
-	//url_base: 'http://api.wildtime.dev',
-	url_base: 'http://wtapi.madebyfieldwork.com',
+	url_base: 'http://api.wildtime.dev',
+	//url_base: 'http://wtapi.madebyfieldwork.com',
 
 	loadTimeframes: function() {
 		var callback = function(data) {
@@ -46,6 +54,15 @@ var wildtime = {
 		wildtime.getTimeframes(callback);
 	},
 	
+	loadActivity: function(activity_id) {
+		var callback = function(data) {
+			var template = Handlebars.compile($('#template-activity').html());
+			$('#content').html(template(data));
+		};
+		wildtime.getActivity(activity_id, callback);
+	},
+	
+/*
 	loadActivities: function(timeframe_id) {
 		var callback = function(data) {
 			var context = {
@@ -62,6 +79,7 @@ var wildtime = {
 		};
 		wildtime.getActivities(timeframe_id, callback);
 	},
+*/
 	
 	getTimeframes: function(callback) {
 		$.getJSON(wildtime.url_base + '/timeframes.jsonp?with=Activities&callback=?', function(data) {
@@ -69,12 +87,71 @@ var wildtime = {
 		});
 	},
 	
+	getActivity: function(activity_id, callback) {
+		$.getJSON(wildtime.url_base + '/activities/view/' + activity_id + '.jsonp?callback=?', function(data) {
+			callback(data);
+		});
+	}
+	
+/*
 	getActivities: function(timeframe_id, callback) {
 		$.getJSON(wildtime.url_base + '/timeframes/' + timeframe_id + '/activities.jsonp?callback=?', function(data) {
 			callback(data);
 		});
 	}
+*/
 	
 }
+
+
+
+;(function ($) {
+  $.fn.slideDown = function (duration) {    
+    // get old position to restore it then
+    var position = this.css('position');
+
+    // show element if it is hidden (it is needed if display is none)
+    this.show();
+
+    // place it so it displays as usually but hidden
+    this.css({
+      position: 'absolute',
+      visibility: 'hidden'
+    });
+
+    // get naturally height
+    var height = this.height();
+
+    // set initial css for animation
+    this.css({
+      position: position,
+      visibility: 'visible',
+      overflow: 'hidden',
+      height: 0
+    });
+
+    // animate to gotten height
+    this.animate({
+      height: height
+    }, duration, 'ease-out');
+  };
+})(Zepto);
+
+;(function ($) {
+  $.fn.slideUp = function (duration) {
+  	var height = this.css('height');  
+    this.css({
+    	overflow: 'hidden',
+    	height: this.height()
+    });
+    this.animate({
+      height: 0
+    }, duration, 'ease-out', function() {
+	    $(this).hide().css({height: height});
+    });
+  };
+})(Zepto);
+
+
 
 
