@@ -35,7 +35,15 @@
 		{{#if items.length}}
 			<ul class="links-list">
 				{{#each items}}
-					<li><a href="/{{this.url}}">{{this.text}}</a></li>
+					<li><a href="{{this.url}}">{{this.text}}</a>
+						{{#if this.activities.length}}
+							<ul class="links-sub-list">
+								{{#each this.activities}}
+									<li><a href="/activities/view/{{this.id}}">{{this.title}}</a></li>
+								{{/each}}
+							</ul>
+						{{/if}}
+					</li>
 				{{/each}}
 			</ul>
 		{{/if}}
