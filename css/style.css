@@ -220,6 +220,8 @@ html, body { height:100%; }
 header { 
 	width:100%;
 	height:182px;
+	background-color:#FFF7E1;
+	position:fixed;
 }
 
 #grass-pattern {
@@ -229,7 +231,7 @@ header {
 	background-position:bottom left;
 	background-repeat:repeat-x;
 	position:absolute;
-	padding:-16px 0 0 0;
+	padding:182px 0 0 0;
 }
 
 #wt-logo {
@@ -243,6 +245,7 @@ header {
 	width:100%;
 	color:#FFF7E1;
 	font-size:2.5em;
+	padding:182px 0 0 0;
 }
 
 #content li {border-bottom:1px solid #FFF7E1; padding:0 0 0 50px;}
