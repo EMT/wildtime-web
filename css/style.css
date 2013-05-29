@@ -251,10 +251,20 @@ header {
 	padding:182px 0 0 0;
 }
 
-#content li {
+#content ul {
+	list-style:none;
+}
+
+#content .links-list li {
 	border-bottom:1px solid #FFF7E1;
 	padding:0 0 0 50px;
 	font-size:2.5em;
+}
+
+#content .links-sub-list li {
+	padding:0 0 0 0;
+	font-size:inherit;
+	background-color:#124734;
 }
 
 #content li a {
