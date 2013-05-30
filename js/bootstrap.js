@@ -6,6 +6,17 @@ $(function(){
 	
 	wildtime.loadTimeframes();
 	
+	$('#menu-button').on('click', function(e) {
+		e.preventDefault();
+		var $menu = $('#menu');
+		if ($menu.css('display') === 'none') {
+			$menu.slideDown(300);
+		}
+		else {
+			$menu.slideUp(300);
+		}
+	});
+	
 	$('#content').on('click', '.links-list > li > a', function(e) {
 		e.preventDefault();
 		var $sublist = $(this).siblings('.links-sub-list');
@@ -26,7 +37,7 @@ $(function(){
 	
 	$('#content').on('click', '#back-to-timeframe', function(e) {
 		e.preventDefault();
-		// TODO
+		wildtime.showNav();
 	});
 	
 	$('#content').on('click', '#activity-next', function(e) {
@@ -61,27 +72,39 @@ var wildtime = {
 	},
 	
 	initNav: function() {
+		$('#content').html(wildtime.constructNav());
+	},
+	
+	showNav: function() {
+		var after = function() {
+			$('#timeframe-' + wildtime.current_timeframe.id + ' > a').trigger('click');
+		}
+		wildtime.transitionRight(wildtime.constructNav(), after);
+	},
+	
+	constructNav: function() {
 		var context = {
 			items: []
 		}
 		for (var i in wildtime.timeframes) {
 			context.items.push({
+				id: wildtime.timeframes[i].id,
 				url: '/timeframes/' + i + '/activities',
 				text: wildtime.timeframes[i].human,
 				activities: wildtime.timeframes[i].activities
 			});
 		}
 		var template = Handlebars.compile($('#template-links-list').html());
-		$('#content').html(template(context));
+		return template(context);
 	},
 
 	showActivities: function(timeframe, activity_id) {
 		wildtime.current_timeframe = timeframe;
 		var template = Handlebars.compile($('#template-activity-back-link').html());
-		$('#content').html(template(timeframe));
+		var html = template(timeframe);
 		template = Handlebars.compile($('#template-activity-slider').html());
-		$('#content').append(template({}));
-		wildtime.initActivities(timeframe);
+		html += template({});
+		wildtime.transitionLeft(html, null, function() {wildtime.initActivities(timeframe); });
 		if (activity_id) {
 			wildtime.goToActivity(activity_id);
 		}
@@ -137,6 +160,44 @@ var wildtime = {
 			}
 		}
 		return null;
+	},
+	
+	transitionLeft: function(new_content, post, pre) {
+		//	Set the stage
+		$('#content').css({width: '200%'});
+		$('#content').html($('<div id="content-out" style="width: 50%; float: left;"></div>').append($('#content').html()));
+		$('#content').append($('<div id="content-in" style="width: 50%; float: left;"></div>').html(new_content));
+		if (pre) {
+			pre();
+		}
+		//	Do the slide
+		$('#content').animate({left: '-100%'}, 300, 'ease-out', function() {
+			//	Tidy up
+			$('#content-out').remove();
+			$('#content').html($('#content-in').html()).css({width: '100%', left: 0});
+			if (post) {
+				post();
+			}
+		});
+	},
+	
+	transitionRight: function(new_content, post, pre) {
+		//	Set the stage
+		$('#content').css({width: '200%', left: '-100%'});
+		$('#content').html($('<div id="content-out" style="width: 50%; float: left;"></div>').append($('#content').html()));
+		$('#content').prepend($('<div id="content-in" style="width: 50%; float: left;"></div>').html(new_content));
+		if (pre) {
+			pre();
+		}
+		//	Do the slide
+		$('#content').animate({left: 0}, 300, 'ease-out', function() {
+			//	Tidy up
+			$('#content-out').remove();
+			$('#content').html($('#content-in').html()).css({width: '100%', left: 0});
+			if (post) {
+				post();
+			}
+		});
 	}
 	
 }
@@ -154,7 +215,9 @@ var wildtime = {
     // place it so it displays as usually but hidden
     this.css({
       position: 'absolute',
-      visibility: 'hidden'
+      visibility: 'hidden',
+      left: 0,
+      right: 0
     });
 
     // get naturally height

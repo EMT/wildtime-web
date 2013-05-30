@@ -259,6 +259,18 @@ header {
 	max-width:100%;
 }
 
+#menu {
+	background: rgb(255,255,245);
+	display: none;
+}
+#menu a {
+	text-decoration: none;
+	color: rgb(103,151,127);
+	display: block;
+	border-bottom: 1px solid rgb(229,229,206);
+	padding: 1.5em 7.81%;
+}
+
 /* = Content = */
 
 #content {
@@ -267,6 +279,13 @@ header {
 	color:#FFF7E1;
 	padding:4em 0 0 0;
 	z-index:0;
+	position: relative;
+	overflow: hidden;
+}
+#content-out,
+#content-in {
+	position: relative;
+	overflow: hidden;
 }
 
 #content ul {
