@@ -19,8 +19,9 @@ $(function(){
 	
 	$('#content').on('click', '.links-sub-list > li > a', function(e) {
 		e.preventDefault();
+		var timeframe_id = $(this).parents('li').data('timeframeId');
 		var activity_id = $(this).attr('href').split('/')[3];
-		wildtime.loadActivities(activity_id);
+		wildtime.showActivities(wildtime.timeframes[timeframe_id], activity_id);
 	});
 	
 	$('#content').on('click', '#back-to-timeframe', function(e) {
@@ -86,7 +87,16 @@ var wildtime = {
 		$('#content').html(template(timeframe));
 		template = Handlebars.compile($('#template-activity-slider').html());
 		$('#content').append(template({}));
-		wildtime.nextActivity();
+		wildtime.initActivities(timeframe);
+	},
+	
+	initActivities: function(timeframe) {
+		var html = '', template;
+		for (var i = 0, len = timeframe.activities.length; i < len; i ++) {
+			template = Handlebars.compile($('#template-activity').html());
+			html += template(timeframe.activities[i]);
+		}
+		$('#activity-slider').html(html);
 	},
 	
 	nextActivity: function(activity_id, callback) {
