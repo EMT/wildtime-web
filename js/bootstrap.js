@@ -54,7 +54,6 @@ var wildtime = {
 	
 	loadActivity: function(activity_id) {
 		var callback = function(data) {
-	console.log(data);
 			var template = Handlebars.compile($('#template-activity').html());
 			$('#content').html(template(data.activity));
 		};
