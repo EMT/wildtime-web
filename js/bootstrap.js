@@ -68,19 +68,6 @@ var wildtime = {
 		var template = Handlebars.compile($('#template-links-list').html());
 		$('#content').html(template(context));
 	},
-	
-/*
-	loadActivities: function(activity_id) {
-		var callback = function(data) {
-			var template = Handlebars.compile($('#template-activity-back-link').html());
-			$('#content').html(template(data.activity.timeframe));
-			
-			template = Handlebars.compile($('#template-activity-slider').html());
-			$('#content').append(template({}));
-		}
-		wildtime.nextActivity(activity_id, callback);
-	},
-*/
 
 	showActivities: function(timeframe, activity_id) {
 		var template = Handlebars.compile($('#template-activity-back-link').html());
@@ -96,7 +83,8 @@ var wildtime = {
 			template = Handlebars.compile($('#template-activity').html());
 			html += template(timeframe.activities[i]);
 		}
-		$('#activity-slider').html(html);
+		$('#activity-slider').html(html).css({width: (timeframe.activities.length * 100) + '%'});
+		$('#activity-slider .activity').css({width: (1 / (timeframe.activities.length * 100)) + '%'});
 	},
 	
 	nextActivity: function(activity_id, callback) {
@@ -112,46 +100,11 @@ var wildtime = {
 		$('#activity-slider').prepend(template(data.activity));
 	},
 	
-/*
-	loadActivities: function(timeframe_id) {
-		var callback = function(data) {
-			var context = {
-				items: []
-			}
-			for (var i in data.activities) {
-				context.items.push({
-					url: '/activities/view/' + i,
-					text: data.activities[i].title
-				});
-			}
-			var template = Handlebars.compile($('#template-links-list').html());
-			$('#content').html(template(context));
-		};
-		wildtime.getActivities(timeframe_id, callback);
-	},
-*/
-	
 	getTimeframes: function(callback) {
 		$.getJSON(wildtime.url_base + '/timeframes.jsonp?with=Activities&callback=?', function(data) {
 			callback(data);
 		});
 	}
-	
-/*
-	getActivity: function(activity_id, callback) {
-		$.getJSON(wildtime.url_base + '/activities/view/' + activity_id + '.jsonp?callback=?', function(data) {
-			callback(data);
-		});
-	}
-*/
-	
-/*
-	getActivities: function(timeframe_id, callback) {
-		$.getJSON(wildtime.url_base + '/timeframes/' + timeframe_id + '/activities.jsonp?callback=?', function(data) {
-			callback(data);
-		});
-	}
-*/
 	
 }
 

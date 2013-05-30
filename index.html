@@ -61,11 +61,13 @@
 	
 	<script id="template-activity" type="text/x-handlebars-template">
 		<div class="activity">
-			<h2>{{title}}</h2>
-			{{#if image_url}}
-				<figure><img src="{{image_url}}" alt="{{title}}" /></figure>
-			{{/if}}
-			<p>{{text}}</p>
+			<div class="acitivity-inner">
+				<h2>{{title}}</h2>
+				{{#if image_url}}
+					<figure><img src="{{image_url}}" alt="{{title}}" /></figure>
+				{{/if}}
+				<p>{{text}}</p>
+			</div>
 		</div>
 	</script>
 
