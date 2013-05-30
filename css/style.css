@@ -261,7 +261,6 @@ header {
 
 #content {
 	background-color:#CEDC00;
-	height:600px;
 	width:100%;
 	color:#FFF7E1;
 	padding:4em 0 0 0;
@@ -301,9 +300,23 @@ header {
 
 /* = Content - activity = */
 
+#back-to-timeframe {
+	background-color:#69813C;
+	display:block;
+	width:90%;
+	height:3.44em;
+	margin:0 auto 0 auto;
+	text-align:center;
+}
+
+a#back-to-timeframe {
+	color:#124734;
+	text-decoration:none;
+	font-size:1em;
+}
+
 #activity-slider {
 	background-color:#124734;
-	height:100%;
 	padding:4em 0 0 0;
 	/*padding:4em 0 0 1.875em;*/
 	width:100%;
@@ -327,18 +340,24 @@ header {
 	background-image:url(../images/arrow-prev.svg);
 	background-repeat:no-repeat;
 	display:block;
+	text-indent:-999em;
 	width:19px;
 	height:36px;
-	float:left;
+	position:fixed;
+	top:50%;
+	left:2%;
 }
 
 #activity-next {
 	background-image:url(../images/arrow-next.svg);
 	background-repeat:no-repeat;
 	display:block;
+	text-indent:-999em;
 	width:19px;
 	height:36px;
-	float:right;
+	position:fixed;
+	top:50%;
+	right:2%;
 }
 
 /* ==|== media queries ======================================================
