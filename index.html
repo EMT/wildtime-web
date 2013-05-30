@@ -49,9 +49,24 @@
 		{{/if}}
 	</script>
 	
+	<script id="template-activity-back-link" type="text/x-handlebars-template">
+		<a href="#" id="back-to-timeframe">Back to {{human}}</a>
+	</script>
+	
+	<script id="template-activity-slider" type="text/x-handlebars-template">
+		<div id="activity-slider"></div>
+		<a href="#" id="activity-prev">Previous</a>
+		<a href="#" id="activity-next">Next</a>
+	</script>
+	
 	<script id="template-activity" type="text/x-handlebars-template">
-		<h2>{{title}}</h2>
-		<p>{{text}}</p>
+		<div class="activity">
+			<h2>{{title}}</h2>
+			{{#if image_url}}
+				<figure><img src="{{image_url}}" alt="{{title}}" /></figure>
+			{{/if}}
+			<p>{{text}}</p>
+		</div>
 	</script>
 
 	<script src="js/zepto.min.js"></script>
