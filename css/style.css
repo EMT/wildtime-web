@@ -216,6 +216,8 @@ td { vertical-align: top; }
 
 html, body { height:100%; }
 
+/* ================= Header ================= */
+
 header { 
 	width:100%;
 	background-color:#FFF7E1;
@@ -254,6 +256,8 @@ header {
 #menu-button img {
 	max-width:100%;
 }
+
+/* ================= Content ================= */
 
 #content {
 	background-color:#CEDC00;
@@ -294,6 +298,13 @@ header {
 	padding:1.875em 0 1.875em 1.875em;
 	/* padding:1.875em 0 1.875em 0; */
 }
+
+/* ================= Content - single task ================= */
+
+#content-task {
+	background-color:#124734;
+	height:200px;
+} 
 
 /* ==|== media queries ======================================================
 
