@@ -216,7 +216,7 @@ td { vertical-align: top; }
 
 html, body { height:100%; }
 
-/* ================= Header ================= */
+/* = Header = */
 
 header { 
 	width:100%;
@@ -250,21 +250,21 @@ header {
 	float:right;
 	padding:2.03em 7.81% 0 0;
 	width:30px;
-	max-width:5%;
+	max-width:4%;
 }
 
 #menu-button img {
 	max-width:100%;
 }
 
-/* ================= Content ================= */
+/* = Content = */
 
 #content {
 	background-color:#CEDC00;
 	height:600px;
 	width:100%;
 	color:#FFF7E1;
-	padding:7em 0 0 0;
+	padding:4em 0 0 0;
 }
 
 #content ul {
@@ -299,12 +299,44 @@ header {
 	/* padding:1.875em 0 1.875em 0; */
 }
 
-/* ================= Content - single task ================= */
+/* = Content - activity = */
 
-#content-task {
+#activity-slider {
 	background-color:#124734;
-	height:200px;
-} 
+	height:100%;
+	padding:4em 0 0 0;
+	/*padding:4em 0 0 1.875em;*/
+	width:100%;
+}
+
+.activity {
+	width:90%;
+	margin:0 5% 0 5%;
+	font-size:1em;
+	line-height:1.5em;
+}
+
+#activity-slider h2 {
+	margin:0px;
+	padding:1em 0 0 0;
+	text-align:center;
+	font-size:1.25em;
+}
+
+#activity-prev {
+	background-image:url(../images/arrow-prev.svg);
+	background-repeat:no-repeat;
+	display:block;
+	width:19px;
+	height:36px;
+}
+
+#activity-next {
+	background-image:url(../images/arrow-next.svg);
+	background-repeat:no-repeat;
+	width:19px;
+	height:36px;
+}
 
 /* ==|== media queries ======================================================
 
