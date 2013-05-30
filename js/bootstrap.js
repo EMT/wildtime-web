@@ -34,6 +34,11 @@ $(function(){
 		wildtime.nextActivity();
 	});
 	
+	$('#content').on('click', '#activity-prev', function(e) {
+		e.preventDefault();
+		wildtime.prevActivity();
+	});
+	
 });
 
 
@@ -45,7 +50,7 @@ var wildtime = {
 	
 	timeframes: null,
 	current_timeframe: null,
-	current_activity_id: null,
+	current_activity_index: null,
 
 	loadTimeframes: function() {
 		var callback = function(data) {
@@ -93,16 +98,21 @@ var wildtime = {
 	},
 	
 	nextActivity: function() {
-		
+		if (wildtime.current_activity_index < wildtime.current_timeframe.activities.length - 1) {
+			wildtime.goToActivity(wildtime.current_timeframe.activities[wildtime.current_activity_index + 1].id);
+		}
 	},
 	
 	prevActivity: function() {
-		
+		if (wildtime.current_activity_index > 0) {
+			wildtime.goToActivity(wildtime.current_timeframe.activities[wildtime.current_activity_index - 1].id);
+		}
 	},
 	
 	goToActivity: function(activity_id) {
 		var index = $('#activity-' + activity_id).index();
 		$('#activity-slider').animate({left: (-100*index) + '%'}, 500, 'ease-out');
+		wildtime.current_activity_index = index;
 	},
 	
 	appendActivity: function(data) {
