@@ -21,7 +21,7 @@ $(function(){
 	$('#content').on('click', '.links-sub-list > li > a', function(e) {
 		e.preventDefault();
 		var activity_id = $(this).attr('href').split('/')[3];
-		wildtime.loadActivity(activity_id);
+		wildtime.loadActivities(activity_id);
 	});
 	
 	
@@ -52,18 +52,30 @@ var wildtime = {
 		wildtime.getTimeframes(callback);
 	},
 	
-	loadActivity: function(activity_id) {
+	loadActivities: function(activity_id) {
 		var callback = function(data) {
 			var template = Handlebars.compile($('#template-activity-back-link').html());
 			var back_link = template(data.activity.timeframe);
 			
 			template = Handlebars.compile($('#template-activity-slider').html());
 			$('#content').html(template({}));
-			
-			template = Handlebars.compile($('#template-activity').html());
-			$('#activity-slider').html(template(data.activity));
-		};
-		wildtime.getActivity(activity_id, callback);
+		}
+		wildtime.nextActivity(activity_id, callback);
+	},
+	
+	nextActivity: function(activity_id, callback) {
+		var cb = (callback) ? 
+				function(data) {callback(data); wildtime.appendActivity(data) } : wildtime.appendActivity;
+		wildtime.getActivity(activity_id, cb);
+	},
+	
+	appendActivity: function(data) {
+		var template = Handlebars.compile($('#template-activity').html());
+		$('#activity-slider').append(template(data.activity));
+	},
+	prependActivity: function(data) {
+		var template = Handlebars.compile($('#template-activity').html());
+		$('#activity-slider').prepend(template(data.activity));
 	},
 	
 /*
