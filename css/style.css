@@ -225,22 +225,34 @@ header {
 #grass-pattern {
 	width:100%;
 	height:18px;
-	background-image:url('../images/grass-pattern.png');
-	background-position:bottom left;
+	background-image:url(../images/grass-pattern.svg);
 	background-repeat:repeat-x;
 	position:absolute;
 	bottom:-18px;
+	background-size: 36px 19px;
 }
 
 #wt-logo {
 	position:relative;
 	float:left;
-	padding:2em 0 2em 7.81%;
+	padding:2.03em 0 2.03em 1.875em; /* em was 7.81% */
+	width:320px;
+	max-width:50%;
+}
+
+#wt-logo img {
+	max-width:100%;
 }
 
 #menu-button {
 	float:right;
-	padding:2em 7.81% 0 0;
+	padding:2.03em 7.81% 0 0;
+	width:30px;
+	max-width:5%;
+}
+
+#menu-button img {
+	max-width:100%;
 }
 
 #content {
@@ -248,7 +260,7 @@ header {
 	height:600px;
 	width:100%;
 	color:#FFF7E1;
-	padding:182px 0 0 0;
+	padding:7em 0 0 0;
 }
 
 #content ul {
@@ -257,8 +269,16 @@ header {
 
 #content .links-list li {
 	border-bottom:1px solid #FFF7E1;
-	padding:0 0 0 50px;
-	font-size:2.5em;
+	/* padding:1.875em 0 1.875em; */
+	font-size:1.25em;
+}
+
+#content .links-list li a {
+/*	padding:0 0 0 1.875em; */
+}
+
+.links-sub-list {
+	display:none;
 }
 
 #content .links-sub-list li {
@@ -270,6 +290,9 @@ header {
 #content li a {
 	color:#FFF7E1;
 	text-decoration:none;
+	display:block;
+	padding:1.875em 0 1.875em 1.875em;
+	/* padding:1.875em 0 1.875em 0; */
 }
 
 /* ==|== media queries ======================================================
