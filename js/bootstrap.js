@@ -54,8 +54,14 @@ var wildtime = {
 	
 	loadActivity: function(activity_id) {
 		var callback = function(data) {
-			var template = Handlebars.compile($('#template-activity').html());
-			$('#content').html(template(data.activity));
+			var template = Handlebars.compile($('#template-activity-back-link').html());
+			var back_link = template(data.activity.timeframe);
+			
+			template = Handlebars.compile($('#template-activity-slider').html());
+			$('#content').html(template({}));
+			
+			template = Handlebars.compile($('#template-activity').html());
+			$('#activity-slider').html(template(data.activity));
 		};
 		wildtime.getActivity(activity_id, callback);
 	},
