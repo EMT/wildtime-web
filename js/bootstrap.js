@@ -44,7 +44,8 @@ var wildtime = {
 	url_base: 'http://wtapi.madebyfieldwork.com',
 	
 	timeframes: null,
-	current_activity_id: 0,
+	current_timeframe: null,
+	current_activity_id: null,
 
 	loadTimeframes: function() {
 		var callback = function(data) {
@@ -70,11 +71,15 @@ var wildtime = {
 	},
 
 	showActivities: function(timeframe, activity_id) {
+		wildtime.current_timeframe = timeframe;
 		var template = Handlebars.compile($('#template-activity-back-link').html());
 		$('#content').html(template(timeframe));
 		template = Handlebars.compile($('#template-activity-slider').html());
 		$('#content').append(template({}));
 		wildtime.initActivities(timeframe);
+		if (activity_id) {
+			wildtime.goToActivity(activity_id);
+		}
 	},
 	
 	initActivities: function(timeframe) {
@@ -87,8 +92,17 @@ var wildtime = {
 		$('#activity-slider .activity').css({width: (1 / (timeframe.activities.length * 100)) + '%'});
 	},
 	
-	nextActivity: function(activity_id, callback) {
-		wildtime.appendActivity(timeframe);
+	nextActivity: function() {
+		
+	},
+	
+	prevActivity: function() {
+		
+	},
+	
+	goToActivity: function(activity_id) {
+		var index = $('#activity-' + activity_id).index();
+		$('#activity-slider').animate({left: (-100*index) + '%'}, 500, 'ease-out');
 	},
 	
 	appendActivity: function(data) {
@@ -104,6 +118,15 @@ var wildtime = {
 		$.getJSON(wildtime.url_base + '/timeframes.jsonp?with=Activities&callback=?', function(data) {
 			callback(data);
 		});
+	},
+	
+	getActivityIndex: function(timeframe, activity_id) {
+		for (var i = 0, len = timeframe.activities.length; i < len; i ++) {
+			if (timeframe.activities[i].id == activity_id) {
+				return i;
+			}
+		}
+		return null;
 	}
 	
 }
