@@ -31,8 +31,8 @@ $(function(){
 
 var wildtime = {
 
-	url_base: 'http://api.wildtime.dev',
-	//url_base: 'http://wtapi.madebyfieldwork.com',
+	//url_base: 'http://api.wildtime.dev',
+	url_base: 'http://wtapi.madebyfieldwork.com',
 
 	loadTimeframes: function() {
 		var callback = function(data) {
