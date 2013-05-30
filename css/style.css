@@ -329,13 +329,16 @@ header {
 	display:block;
 	width:19px;
 	height:36px;
+	float:left;
 }
 
 #activity-next {
 	background-image:url(../images/arrow-next.svg);
 	background-repeat:no-repeat;
+	display:block;
 	width:19px;
 	height:36px;
+	float:right;
 }
 
 /* ==|== media queries ======================================================
