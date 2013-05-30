@@ -4,7 +4,6 @@
 
 $(function(){
 	
-	
 	wildtime.loadTimeframes();
 	
 	$('#content').on('click', '.links-list > li > a', function(e) {
@@ -24,6 +23,15 @@ $(function(){
 		wildtime.loadActivities(activity_id);
 	});
 	
+	$('#content').on('click', '#back-to-timeframe', function(e) {
+		e.preventDefault();
+		// TODO
+	});
+	
+	$('#content').on('click', '#activity-next', function(e) {
+		e.preventDefault();
+		wildtime.nextActivity();
+	});
 	
 });
 
@@ -33,40 +41,56 @@ var wildtime = {
 
 	//url_base: 'http://api.wildtime.dev',
 	url_base: 'http://wtapi.madebyfieldwork.com',
+	
+	timeframes: null,
+	current_activity_id: 0,
 
 	loadTimeframes: function() {
 		var callback = function(data) {
-			var context = {
-				items: []
-			}
-			for (var i in data.timeframes) {
-				context.items.push({
-					url: '/timeframes/' + i + '/activities',
-					text: data.timeframes[i].human,
-					activities: data.timeframes[i].activities
-				});
-			}
-			var template = Handlebars.compile($('#template-links-list').html());
-			$('#content').html(template(context));
+			wildtime.timeframes = data.timeframes;
+			wildtime.initNav();
 		};
 		wildtime.getTimeframes(callback);
 	},
 	
+	initNav: function() {
+		var context = {
+			items: []
+		}
+		for (var i in wildtime.timeframes) {
+			context.items.push({
+				url: '/timeframes/' + i + '/activities',
+				text: wildtime.timeframes[i].human,
+				activities: wildtime.timeframes[i].activities
+			});
+		}
+		var template = Handlebars.compile($('#template-links-list').html());
+		$('#content').html(template(context));
+	},
+	
+/*
 	loadActivities: function(activity_id) {
 		var callback = function(data) {
 			var template = Handlebars.compile($('#template-activity-back-link').html());
-			var back_link = template(data.activity.timeframe);
+			$('#content').html(template(data.activity.timeframe));
 			
 			template = Handlebars.compile($('#template-activity-slider').html());
-			$('#content').html(template({}));
+			$('#content').append(template({}));
 		}
 		wildtime.nextActivity(activity_id, callback);
 	},
+*/
+
+	showActivities: function(timeframe, activity_id) {
+		var template = Handlebars.compile($('#template-activity-back-link').html());
+		$('#content').html(template(timeframe));
+		template = Handlebars.compile($('#template-activity-slider').html());
+		$('#content').append(template({}));
+		wildtime.nextActivity();
+	},
 	
 	nextActivity: function(activity_id, callback) {
-		var cb = (callback) ? 
-				function(data) {callback(data); wildtime.appendActivity(data) } : wildtime.appendActivity;
-		wildtime.getActivity(activity_id, cb);
+		wildtime.appendActivity(timeframe);
 	},
 	
 	appendActivity: function(data) {
@@ -101,13 +125,15 @@ var wildtime = {
 		$.getJSON(wildtime.url_base + '/timeframes.jsonp?with=Activities&callback=?', function(data) {
 			callback(data);
 		});
-	},
+	}
 	
+/*
 	getActivity: function(activity_id, callback) {
 		$.getJSON(wildtime.url_base + '/activities/view/' + activity_id + '.jsonp?callback=?', function(data) {
 			callback(data);
 		});
 	}
+*/
 	
 /*
 	getActivities: function(timeframe_id, callback) {
