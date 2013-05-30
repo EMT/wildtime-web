@@ -20,8 +20,6 @@ $(function(){
 	
 	$('#content').on('click', '.links-sub-list > li > a', function(e) {
 		e.preventDefault();
-	console.log($(this).attr('href'));
-	console.log($(this).attr('href').split('/')[3]);
 		var activity_id = $(this).attr('href').split('/')[3];
 		wildtime.loadActivity(activity_id);
 	});
@@ -56,8 +54,9 @@ var wildtime = {
 	
 	loadActivity: function(activity_id) {
 		var callback = function(data) {
+	console.log(data);
 			var template = Handlebars.compile($('#template-activity').html());
-			$('#content').html(template(data));
+			$('#content').html(template(data.activity));
 		};
 		wildtime.getActivity(activity_id, callback);
 	},
