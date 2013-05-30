@@ -89,7 +89,7 @@ var wildtime = {
 			html += template(timeframe.activities[i]);
 		}
 		$('#activity-slider').html(html).css({width: (timeframe.activities.length * 100) + '%'});
-		$('#activity-slider .activity').css({width: (1 / (timeframe.activities.length * 100)) + '%'});
+		$('#activity-slider .activity').css({width: ((1 / timeframe.activities.length) * 100) + '%'});
 	},
 	
 	nextActivity: function() {
