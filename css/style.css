@@ -222,6 +222,7 @@ header {
 	width:100%;
 	background-color:#FFF7E1;
 	position:fixed;
+	z-index:2;
 }
 
 #grass-pattern {
@@ -232,6 +233,7 @@ header {
 	position:absolute;
 	bottom:-18px;
 	background-size: 36px 19px;
+	z-index:2;
 }
 
 #wt-logo {
@@ -264,6 +266,7 @@ header {
 	width:100%;
 	color:#FFF7E1;
 	padding:4em 0 0 0;
+	z-index:0;
 }
 
 #content ul {
@@ -302,17 +305,20 @@ header {
 
 #back-to-timeframe {
 	background-color:#69813C;
-	display:block;
 	width:90%;
-	height:3.44em;
-	margin:0 auto 0 auto;
+	/*height:3.44em;*/
+	margin:0 5% 0 5%;
 	text-align:center;
+	position:absolute;
+	z-index:1;
 }
 
 a#back-to-timeframe {
 	color:#124734;
 	text-decoration:none;
 	font-size:1em;
+	display:block;
+	padding:1em 0 1em 0;
 }
 
 #activity-slider {
@@ -326,6 +332,7 @@ a#back-to-timeframe {
 
 .activity {
 	float: left;
+	background-color:#124734;
 }
 .activity-inner {
 	width:90%;
