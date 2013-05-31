@@ -56,8 +56,8 @@ $(function(){
 
 var wildtime = {
 
-	//url_base: 'http://api.wildtime.dev',
-	url_base: 'http://wtapi.madebyfieldwork.com',
+	url_base: 'http://api.wildtime.dev',
+	//url_base: 'http://wtapi.madebyfieldwork.com',
 	
 	timeframes: null,
 	current_timeframe: null,
@@ -77,7 +77,10 @@ var wildtime = {
 	
 	showNav: function() {
 		var after = function() {
-			$('#timeframe-' + wildtime.current_timeframe.id + ' > a').trigger('click');
+			if (wildtime.current_timeframe) {
+				$('#timeframe-' + wildtime.current_timeframe.id + ' > a').trigger('click');
+				$('html, body').animate({scrollTop: 100}, 300, 'ease-out');
+			}
 		}
 		wildtime.transitionRight(wildtime.constructNav(), after);
 	},

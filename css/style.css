@@ -270,7 +270,7 @@ header {
 #wt-logo {
 	position:relative;
 	float:left;
-	padding:2.03em 0 2.03em 1.875em; /* em was 7.81% */
+	padding:2.03em 6% 2.03em; /* em was 7.81% */
 	width:320px;
 	max-width:50%;
 }
@@ -281,7 +281,7 @@ header {
 
 #menu-button {
 	float:right;
-	padding:2.03em 7.81% 0 0;
+	padding:2.03em 6% 0 0;
 	width:30px;
 	max-width:4%;
 }
@@ -308,7 +308,7 @@ header {
 	background-color:#CEDC00;
 	width:100%;
 	color:#FFF7E1;
-	padding:6.5em 0 0 0;
+	padding:0;
 	z-index:0;
 	position: relative;
 	overflow: hidden;
@@ -325,6 +325,9 @@ header {
 	list-style:none;
 }
 
+#content .links-list {
+	margin-top: 6.5em;
+}
 #content .links-list li {
 	font-family: "Futura Bold";
 	border-bottom:1px solid #FFF7E1;
@@ -351,34 +354,30 @@ header {
 	color:#FFF7E1;
 	text-decoration:none;
 	display:block;
-	padding:1.875em 0 1.875em 1.875em;
+	padding:1.875em 6%;
 	/* padding:1.875em 0 1.875em 0; */
 }
 
 /* = Content - activity = */
 
 #back-to-timeframe {
+	text-decoration:none;
+	font-size:1em;
 	background-color:#69813C;
-	width:90%;
-	/*height:3.44em;*/
-	margin:0 5% 0 5%;
+	color:#124734;
+	display:block;
+	width:88%;
+	left: 6%;
+	padding: 8em 0 1em;
 	text-align:center;
 	position:absolute;
 	z-index:1;
 }
 
-a#back-to-timeframe {
-	color:#124734;
-	text-decoration:none;
-	font-size:1em;
-	display:block;
-	padding:1em 0 1em 0;
-}
-
 #activity-slider {
 	background-color:#124734;
 	height:100%;
-	padding:4em 0 0 0;
+	padding:12em 0 0 0;
 	/*padding:4em 0 0 1.875em;*/
 	width:100%;
 	position: relative;
@@ -390,7 +389,7 @@ a#back-to-timeframe {
 	height: 100%;
 }
 .activity-inner {
-	width:80%;
+	width:88%;
 	margin: 0 auto;
 	font-size:1em;
 	line-height:1.5em;
