@@ -74,8 +74,8 @@ $(function(){
 
 var wildtime = {
 
-	url_base: 'http://api.wildtime.dev',
-	//url_base: 'http://wtapi.madebyfieldwork.com',
+	//url_base: 'http://api.wildtime.dev',
+	url_base: 'http://wtapi.madebyfieldwork.com',
 	
 	timeframes: null,
 	current_timeframe: null,
