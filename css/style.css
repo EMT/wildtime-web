@@ -294,7 +294,7 @@ header {
 	background: rgb(255,255,245);
 	display: none;
 }
-#menu a {
+#menu > a {
 	text-decoration: none;
 	color: rgb(103,151,127);
 	display: block;
