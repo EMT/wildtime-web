@@ -312,7 +312,6 @@ header {
 	z-index:0;
 	position: relative;
 	overflow: hidden;
-	height: 100%;
 }
 #content-out,
 #content-in {
@@ -326,7 +325,7 @@ header {
 }
 
 #content .links-list {
-	margin-top: 6.5em;
+	padding-top: 6.5em;
 }
 #content .links-list li {
 	font-family: "Futura Bold";

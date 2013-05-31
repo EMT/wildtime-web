@@ -21,10 +21,10 @@ $(function(){
 		e.preventDefault();
 		var $sublist = $(this).siblings('.links-sub-list');
 		if ($sublist.css('display') === 'none') {
-			$sublist.slideDown(500);
+			$sublist.slideDown(300);
 		}
 		else {
-			$sublist.slideUp(500);
+			$sublist.slideUp(300);
 		}
 	});
 	
@@ -44,9 +44,15 @@ $(function(){
 		e.preventDefault();
 		wildtime.nextActivity();
 	});
+	$('#activity-slider').swipeRight(function(e) {
+		wildtime.nextActivity();
+	});
 	
 	$('#content').on('click', '#activity-prev', function(e) {
 		e.preventDefault();
+		wildtime.prevActivity();
+	});
+	$('#activity-slider').swipeLeft(function(e) {
 		wildtime.prevActivity();
 	});
 	
@@ -76,13 +82,17 @@ var wildtime = {
 	},
 	
 	showNav: function() {
-		var after = function() {
+		var before = function() {
 			if (wildtime.current_timeframe) {
-				$('#timeframe-' + wildtime.current_timeframe.id + ' > a').trigger('click');
-				$('html, body').animate({scrollTop: 100}, 300, 'ease-out');
+				$('#timeframe-' + wildtime.current_timeframe.id + ' .links-sub-list').show();
 			}
 		}
-		wildtime.transitionRight(wildtime.constructNav(), after);
+		var after = function() {
+			if (wildtime.current_timeframe) {
+				zeptoScroll($('#timeframe-' + wildtime.current_timeframe.id + ' > a').offset().top - $('#timeframe-' + wildtime.current_timeframe.id + ' > a').height(), 300);
+			}
+		}
+		wildtime.transitionRight(wildtime.constructNav(), after, before);
 	},
 	
 	constructNav: function() {
@@ -167,9 +177,11 @@ var wildtime = {
 	
 	transitionLeft: function(new_content, post, pre) {
 		//	Set the stage
-		$('#content').css({width: '200%'});
+		var scroll = $(window).scrollTop();
+		$('#content').css({width: '200%', height: '100%'});
 		$('#content').html($('<div id="content-out" style="width: 50%; float: left;"></div>').append($('#content').html()));
-		$('#content').append($('<div id="content-in" style="width: 50%; float: left;"></div>').html(new_content));
+		$('#content-out > *').css({marginTop: -1 * scroll});
+		$('#content').append($('<div id="content-in" style="width: 50%; float: left;"></div>').html(new_content));	
 		if (pre) {
 			pre();
 		}
@@ -177,7 +189,7 @@ var wildtime = {
 		$('#content').animate({left: '-100%'}, 300, 'ease-out', function() {
 			//	Tidy up
 			$('#content-out').remove();
-			$('#content').html($('#content-in').html()).css({width: '100%', left: 0});
+			$('#content').html($('#content-in').html()).css({width: '100%', height: 'auto', left: 0});
 			if (post) {
 				post();
 			}
@@ -186,8 +198,10 @@ var wildtime = {
 	
 	transitionRight: function(new_content, post, pre) {
 		//	Set the stage
-		$('#content').css({width: '200%', left: '-100%'});
+		var scroll = $(window).scrollTop();
+		$('#content').css({width: '200%', left: '-100%', height: '100%'});
 		$('#content').html($('<div id="content-out" style="width: 50%; float: left;"></div>').append($('#content').html()));
+		$('#content-out > *').css({marginTop: -1 * scroll});
 		$('#content').prepend($('<div id="content-in" style="width: 50%; float: left;"></div>').html(new_content));
 		if (pre) {
 			pre();
@@ -196,7 +210,7 @@ var wildtime = {
 		$('#content').animate({left: 0}, 300, 'ease-out', function() {
 			//	Tidy up
 			$('#content-out').remove();
-			$('#content').html($('#content-in').html()).css({width: '100%', left: 0});
+			$('#content').html($('#content-in').html()).css({width: '100%', left: 0, height: 'auto'});
 			if (post) {
 				post();
 			}
@@ -208,7 +222,7 @@ var wildtime = {
 
 
 ;(function ($) {
-  $.fn.slideDown = function (duration) {    
+  $.fn.slideDown = function (duration, callback) {    
     // get old position to restore it then
     var position = this.css('position');
 
@@ -233,28 +247,71 @@ var wildtime = {
       overflow: 'hidden',
       height: 0
     });
-
+	
+	if (callback) {
+		var cb = function() {callback(); }
+	}
+	else {
+		var cb = function() {}
+	}
+	
     // animate to gotten height
     this.animate({
       height: height
-    }, duration, 'ease-out');
+    }, duration, 'ease-out', cb);
   };
 })(Zepto);
 
 ;(function ($) {
-  $.fn.slideUp = function (duration) {
+  $.fn.slideUp = function (duration, callback) {
   	var height = this.css('height');  
     this.css({
     	overflow: 'hidden',
     	height: this.height()
     });
+    if (callback) {
+		var cb = function() {callback(); }
+	}
+	else {
+		var cb = function() {}
+	}
     this.animate({
       height: 0
     }, duration, 'ease-out', function() {
 	    $(this).hide().css({height: height});
+	    cb();
     });
   };
 })(Zepto);
+
+
+zeptoScroll = function(endY, duration) {
+    endY = endY || ($.os.android ? 1 : 0);
+    duration = duration || 200;
+
+    var startY = document.body.scrollTop,
+        startT  = +(new Date()),
+        finishT = startT + duration;
+
+    var interpolate = function (source, target, shift) { 
+        return (source + (target - source) * shift); 
+    };
+
+    var easing = function (pos) { 
+        return (-Math.cos(pos * Math.PI) / 2) + .5; 
+    };
+
+    var animate = function() {
+        var now = +(new Date()),
+            shift = (now > finishT) ? 1 : (now - startT) / duration;
+
+        window.scrollTo(0, interpolate(startY, endY, easing(shift)));
+
+        (now > finishT) || setTimeout(animate, 15);
+    };
+
+    animate();
+};
 
 
 
