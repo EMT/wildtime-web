@@ -308,11 +308,11 @@ header {
 	background-color:#CEDC00;
 	width:100%;
 	color:#FFF7E1;
-	padding:4em 0 0 0;
+	padding:6.5em 0 0 0;
 	z-index:0;
 	position: relative;
 	overflow: hidden;
-	min-height: 100%;
+	height: 100%;
 }
 #content-out,
 #content-in {
