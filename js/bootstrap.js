@@ -134,7 +134,7 @@ var wildtime = {
 	
 	goToActivity: function(activity_id) {
 		var index = $('#activity-' + activity_id).index();
-		$('#activity-slider').animate({left: (-100*index) + '%'}, 500, 'ease-out');
+		$('#activity-slider').animate({left: (-100*index) + '%'}, 300, 'ease-out');
 		wildtime.current_activity_index = index;
 	},
 	

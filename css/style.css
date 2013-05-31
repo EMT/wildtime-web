@@ -214,14 +214,20 @@ td { vertical-align: top; }
    ========================================================================== */
 
 @font-face{
-font-family:"Typewriter Regular";
-src:url("../fonts/a3821d94-76b8-4b58-8d6b-2ecf26f1849c.eot?#iefix");
-src:url("../fonts/a3821d94-76b8-4b58-8d6b-2ecf26f1849c.eot?#iefix") format("eot"),url("../fonts/abed3875-6ce6-40fa-aef8-e3318f985f7b.woff") format("woff"),url("../fonts/a196b4a3-891d-4a42-89de-dc1210e5b463.ttf") format("truetype"),url("../fonts/36577113-dd97-49f7-bcfe-9047f300f1a2.svg#36577113-dd97-49f7-bcfe-9047f300f1a2") format("svg");
+	font-family: "Typewriter Regular";
+	src: url("../fonts/a3821d94-76b8-4b58-8d6b-2ecf26f1849c.eot?#iefix");
+	src: url("../fonts/36577113-dd97-49f7-bcfe-9047f300f1a2.svg#36577113-dd97-49f7-bcfe-9047f300f1a2") format("svg"),
+		url("../fonts/a3821d94-76b8-4b58-8d6b-2ecf26f1849c.eot?#iefix") format("eot"),
+		url("../fonts/abed3875-6ce6-40fa-aef8-e3318f985f7b.woff") format("woff"),
+		url("../fonts/a196b4a3-891d-4a42-89de-dc1210e5b463.ttf") format("truetype");
 }
 @font-face{
-font-family:"Futura Bold";
-src:url("../fonts/3b3d00eb-6d89-47ec-83ee-48276a47ad94.eot?#iefix");
-src:url("../fonts/3b3d00eb-6d89-47ec-83ee-48276a47ad94.eot?#iefix") format("eot"),url("../fonts/2a65cbfc-5071-4b4d-bfc2-e052bb091ee2.woff") format("woff"),url("../fonts/812f781d-aa66-47a1-b6a2-7941effc1527.ttf") format("truetype"),url("../fonts/2a371030-ff67-40ac-8307-082c1fccf151.svg#2a371030-ff67-40ac-8307-082c1fccf151") format("svg");
+	font-family: "Futura Bold";
+	src: url("../fonts/3b3d00eb-6d89-47ec-83ee-48276a47ad94.eot?#iefix");
+	src: url("../fonts/2a371030-ff67-40ac-8307-082c1fccf151.svg#2a371030-ff67-40ac-8307-082c1fccf151") format("svg"),
+		url("../fonts/3b3d00eb-6d89-47ec-83ee-48276a47ad94.eot?#iefix") format("eot"),
+		url("../fonts/2a65cbfc-5071-4b4d-bfc2-e052bb091ee2.woff") format("woff"),
+		url("../fonts/812f781d-aa66-47a1-b6a2-7941effc1527.ttf") format("truetype");
 }
 
 
@@ -231,11 +237,15 @@ src:url("../fonts/3b3d00eb-6d89-47ec-83ee-48276a47ad94.eot?#iefix") format("eot"
    Author: Rob Birchall
    ========================================================================== */
 
-html, body { height:100%; }
+html, body, #app { 
+	position: relative;
+	height:100%; 
+}
 
 body {
 	font-family: "Typewriter Regular", Courier;
 }
+
 
 /* = Header = */
 
@@ -302,6 +312,7 @@ header {
 	z-index:0;
 	position: relative;
 	overflow: hidden;
+	min-height: 100%;
 }
 #content-out,
 #content-in {
@@ -377,8 +388,8 @@ a#back-to-timeframe {
 	background-color:#124734;
 }
 .activity-inner {
-	width:90%;
-	margin:0 5% 0 5%;
+	width:80%;
+	margin: 0 auto;
 	font-size:1em;
 	line-height:1.5em;
 }
@@ -418,7 +429,8 @@ a#back-to-timeframe {
 
 figure {
 	width:80%;
-	margin:0 auto 0 auto;
+	margin: 2em auto;
+	text-align: center;
 }
 
 figure img {
