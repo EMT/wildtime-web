@@ -319,6 +319,9 @@ header {
 .menu-content-item li {
 	padding-bottom: 0.4em;
 }
+.menu-content-item a {
+	color: rgb(32,70,50);
+}
 
 /* = Content = */
 
@@ -414,7 +417,7 @@ header {
 	min-height: 100%;
 }
 
-#activity-slider h2 {
+.activity h2 {
 	font-family: "Futura Bold";
 	font-weight: normal;
 	margin:0px;
@@ -422,6 +425,10 @@ header {
 	text-align:center;
 	font-size:1.25em;
 }
+.activity a {
+	color: rgb(255,255,255);
+}
+
 
 #activity-prev {
 	background-image:url(../images/arrow-prev.svg);
