@@ -240,6 +240,7 @@ td { vertical-align: top; }
 html, body, #app { 
 	position: relative;
 	height:100%; 
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 body {
@@ -259,19 +260,19 @@ header {
 #grass-pattern {
 	width:100%;
 	height:18px;
-	background-image:url(../images/grass-pattern.svg);
-	background-repeat:repeat-x;
+	background: transparent url(../images/grass-pattern.png) repeat-x center -1px;
+	background-size: auto 10px;
 	position:absolute;
 	bottom:-18px;
-	background-size: 36px 19px;
 	z-index:2;
 }
 
 #wt-logo {
+    display: block;
 	position:relative;
 	float:left;
-	padding:2.03em 8% 2.03em; /* em was 7.81% */
-	width:200px;
+	padding: 1.6em 8% 1.6em; /* em was 7.81% */
+	width:170px;
 	max-width:50%;
 }
 
@@ -281,9 +282,9 @@ header {
 
 #menu-button {
 	float:right;
-	padding:2.03em 8% 0 0;
-	width:30px;
-	max-width:4%;
+	padding: 1.6em 8% 1.6em 0;
+	width:20px;
+	max-width:10%;
 }
 
 #menu-button img {
@@ -346,7 +347,7 @@ header {
 }
 
 #content .links-list {
-	padding-top: 6.5em;
+	padding-top: 75px;
 }
 #content .links-list li {
 	font-family: "Futura Bold";
@@ -388,7 +389,7 @@ header {
 	display:block;
 	width:84%;
 	left: 8%;
-	padding: 8em 0 1em;
+	padding: 83px 0 0.7em;
 	text-align:center;
 	position:absolute;
 	z-index:1;
@@ -397,7 +398,7 @@ header {
 #activity-slider {
 	background-color:#124734;
 	height:100%;
-	padding:168px 0 0 0;
+	padding:140px 0 0 0;
 	/*padding:4em 0 0 1.875em;*/
 	width:100%;
 	position: relative;
@@ -456,12 +457,14 @@ header {
 
 figure {
 	width:80%;
+	max-width: 200px;
 	margin: 2em auto;
 	text-align: center;
 }
 
 figure img {
 	max-width:100%;
+	visibility: hidden;
 }
 
 /* ==|== media queries ======================================================
