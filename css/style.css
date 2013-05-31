@@ -318,6 +318,7 @@ header {
 #content-in {
 	position: relative;
 	overflow: hidden;
+	height: 100%;
 }
 
 #content ul {
@@ -386,12 +387,14 @@ a#back-to-timeframe {
 .activity {
 	float: left;
 	background-color:#124734;
+	height: 100%;
 }
 .activity-inner {
 	width:80%;
 	margin: 0 auto;
 	font-size:1em;
 	line-height:1.5em;
+	min-height: 100%;
 }
 
 #activity-slider h2 {
