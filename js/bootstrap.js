@@ -89,7 +89,10 @@ var wildtime = {
 		}
 		var after = function() {
 			if (wildtime.current_timeframe) {
-				zeptoScroll($('#timeframe-' + wildtime.current_timeframe.id + ' > a').offset().top - $('#timeframe-' + wildtime.current_timeframe.id + ' > a').height(), 300);
+				var top = $('#timeframe-' + wildtime.current_timeframe.id + ' > a').offset().top - $('#timeframe-' + wildtime.current_timeframe.id + ' > a').height();
+				if (top > 8) {
+					zeptoScroll(top, 300);
+				}
 			}
 		}
 		wildtime.transitionRight(wildtime.constructNav(), after, before);
