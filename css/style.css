@@ -239,12 +239,17 @@ td { vertical-align: top; }
 
 html, body, #app { 
 	position: relative;
-	height:100%; 
+	height: 100%;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 body {
 	font-family: "Typewriter Regular", Courier;
+}
+
+
+#app {
+/* 	overflow: hidden; */
 }
 
 
@@ -255,12 +260,13 @@ header {
 	background-color:#FFF7E1;
 	position:fixed;
 	z-index:2;
+/* 	display: none; */
 }
 
 #grass-pattern {
 	width:100%;
 	height:18px;
-	background: transparent url(../images/grass-pattern.png) repeat-x center -1px;
+	background: transparent url(../images/grass-pattern.png) repeat-x center 0;
 	background-size: auto 10px;
 	position:absolute;
 	bottom:-18px;
@@ -328,19 +334,40 @@ header {
 
 #content {
 	background-color:#CEDC00;
-	width:100%;
+	width:400%;
 	color:#FFF7E1;
 	padding:0;
 	z-index:0;
 	position: relative;
 	overflow: hidden;
-}
-#content-out,
-#content-in {
-	position: relative;
-	overflow: hidden;
 	height: 100%;
 }
+
+#timeframes-nav,
+#activities-nav,
+#activities-container {
+	position: relative;
+	width: 25%;
+	float: left;
+	min-height: 100%;
+	overflow-x: hidden;
+	overflow-y: visible;
+}
+#timeframes-nav {
+	background: rgb(206,220,0);
+}
+#activities-nav,
+#activities-container {
+	background: rgb(18,71,52);
+}
+/*
+#activites-nav,
+#activities-container {
+	height: 0;
+}
+*/
+
+
 
 #content ul {
 	list-style:none;
@@ -348,11 +375,11 @@ header {
 
 #content .links-list {
 	padding-top: 75px;
+	margin: 0;
 }
 #content .links-list li {
 	font-family: "Futura Bold";
 	border-bottom:1px solid #FFF7E1;
-	/* padding:1.875em 0 1.875em; */
 	font-size:1.25em;
 }
 
@@ -361,13 +388,21 @@ header {
 }
 
 .links-sub-list {
-	display:none;
+	position: absolute;
+    top: 111px;
+    left: 0;
+    right: 0;
+    -webkit-transform: translate3d(0,-999em,0);
+	padding: 0;
+	margin: 0;
+	
 }
 
 #content .links-sub-list li {
 	font-family: "Typewriter Regular", Courier;
-	padding:0 0 0 0;
-	font-size:inherit;
+	border-bottom:1px solid #FFF7E1;
+	padding: 0;
+	font-size: 1.125em;
 	background-color:#124734;
 }
 
@@ -375,13 +410,18 @@ header {
 	color:#FFF7E1;
 	text-decoration:none;
 	display:block;
-	padding:1.875em 8%;
-	/* padding:1.875em 0 1.875em 0; */
+	padding: 1.7em 8%;
 }
+#content .links-list li a {
+	padding: 1.44em 8%;
+}
+
 
 /* = Content - activity = */
 
-#back-to-timeframe {
+/*
+#back-to-timeframes,
+#back-to-activities {
 	text-decoration:none;
 	font-size:1em;
 	background-color:#69813C;
@@ -389,31 +429,52 @@ header {
 	display:block;
 	width:84%;
 	left: 8%;
-	padding: 83px 0 0.7em;
+	padding: 15px 0 0.7em;
 	text-align:center;
 	position:absolute;
 	z-index:1;
 }
+*/
 
-#activity-slider {
+#back-to-timeframes,
+#back-to-activities {
+	text-decoration:none;
+	font-size:1em;
+	background-color:#69813C;
+	color:#124734;
+	display:block;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	right: 0;
+	padding: 25px 8% 8px;
+}
+#back-to-timeframes {
+	font-family: "Futura Bold";
+	font-weight: normal;
+	color: rgb(255,255,255);
+	background-color: rgb(206,220,0);
+}
+
+
+.activity-slider {
 	background-color:#124734;
-	height:100%;
-	padding:140px 0 0 0;
-	/*padding:4em 0 0 1.875em;*/
-	width:100%;
-	position: relative;
+	position: absolute;
+    top: 111px;
+    left: 0;
+    -webkit-transform: translate3d(0,-999em,0);
 	overflow: hidden;
 }
 
 .activity {
 	float: left;
 	background-color:#124734;
-	height: 100%;
 }
 .activity-inner {
+/* 	text-align: center; */
 	width:84%;
 	margin: 0 auto;
-	font-size:1em;
+	font-size:1.125em;
 	line-height:1.5em;
 	min-height: 100%;
 }
@@ -422,7 +483,7 @@ header {
 	font-family: "Futura Bold";
 	font-weight: normal;
 	margin:0px;
-	padding:1em 0 0 0;
+	padding: 2em 0 0;
 	text-align:center;
 	font-size:1.25em;
 }

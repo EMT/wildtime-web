@@ -57,6 +57,9 @@
 		</header>
 		
 		<div id="content">
+			<div id="timeframes-nav"></div>
+			<div id="activities-nav"></div>
+			<div id="activities-container"></div>
 		</div>
 	
 	</div><!--app-->
@@ -65,28 +68,32 @@
 		{{#if items.length}}
 			<ul class="links-list">
 				{{#each items}}
-					<li id="timeframe-{{this.id}}" data-timeframe-id="{{this.id}}"><a href="{{this.url}}">{{this.text}}</a>
-						{{#if this.activities.length}}
-							<ul class="links-sub-list">
-								{{#each this.activities}}
-									<li id="activity-{{this.id}}" data-activity-id="{{this.id}}" data-timeframe-id="{{this.timeframe_id}}"><a href="/activities/view/{{this.id}}">{{this.title}}</a></li>
-								{{/each}}
-							</ul>
-						{{/if}}
-					</li>
+					<li id="timeframe-{{this.id}}"><a data-timeframe-id="{{this.id}}" href="#">{{this.text}}</a></li>
+				{{/each}}
+			</ul>
+		{{/if}}
+	</script>
+	
+	<script id="template-timeframe-back-link" type="text/x-handlebars-template">
+		<a href="#" id="back-to-timeframes">Back</a>
+	</script>
+	
+	<script id="template-sub-links-list" type="text/x-handlebars-template">
+		{{#if activities.length}}
+			<ul class="links-sub-list" id="timeframe-nav-{{id}}">
+				{{#each activities}}
+					<li id="activity-{{this.id}}"><a data-activity-id="{{this.id}}" data-timeframe-id="{{this.timeframe_id}}" href="#">{{this.title}}</a></li>
 				{{/each}}
 			</ul>
 		{{/if}}
 	</script>
 	
 	<script id="template-activity-back-link" type="text/x-handlebars-template">
-		<a href="#" id="back-to-timeframe">Back to {{human}}</a>
+		<a href="#" id="back-to-activities">Back</a>
 	</script>
 	
 	<script id="template-activity-slider" type="text/x-handlebars-template">
-		<div id="activity-slider"></div>
-		<a href="#" id="activity-prev">Previous</a>
-		<a href="#" id="activity-next">Next</a>
+		<div class="activity-slider" id="activity-slider-{{timeframe_id}}">{{{activities_html}}}</div>
 	</script>
 	
 	<script id="template-activity" type="text/x-handlebars-template">
@@ -96,15 +103,23 @@
 				{{#if image_url}}
 					<figure><img src="{{image_url}}" alt="{{title}}" /></figure>
 				{{/if}}
-				<p>{{{text}}}</p>
+				{{{paragraphs text}}}
 			</div>
 		</div>
+	</script>
+	
+	<script id="template-activity-slider-nav" type="text/x-handlebars-template">
+		<a href="#" id="activity-prev">Previous</a>
+		<a href="#" id="activity-next">Next</a>
 	</script>
 
 	<script src="js/zepto.min.js"></script>
 	<script src="js/zepto.touch.min.js"></script>
 	<script src="js/handlebars.js"></script>
 	<script src="js/bootstrap.js"></script>
+	
+</body>
+</html>
 	
 </body>
 </html>
