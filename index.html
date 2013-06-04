@@ -25,35 +25,34 @@
 				<a href="#" class="menu-nav-item" data-content-id="content-safety">Safety Tips</a>
 				<div class="menu-content-item" id="content-safety">
 					<h2>Safety</h2>
-					<p>Safely taking part in activities</p>
-					<p>Safety is really important to us, and there are lots of tips on how to become a 50 things expert safely on each of the activity pages.  We've also added below some general advice and links to useful websites* containing more information and safety advice.</p>
-					<p>General advice for parents</p>
-					<p>When dealing with soil, animals or natural water sources:</p>
-					<ul>
-						<li>Make sure any cuts or wounds are covered with waterproof plasters to avoid infection</li>
-						<li>Discourage your child from putting anything in his or her mouth</li>
-						<li>Wash your child's hands thoroughly afterwards</li>
-						<li>Make sure your child wears warm, weather resistant clothing during any activities involving water or snow</li>
-						<li>Make sure your child wears suitable footwear for any activities that may involve slippery or uneven surfaces</li>
-						<li>Check weather reports before any activity and avoid trees or natural water sources in wet or windy conditions</li>
-						<li>Supervise children at all times during these activities</li>
-						<li>For more challenging activities, find an organised event to ensure the safest conditions for your child</li>
-					</ul>
+					<p>It’s fun outdoors, but pay attention and keep your senses alert. Normal health and safety standards apply. But we can’t be responsible for your actions.</p>
+					<p>The benefits from being outside are far greater than the odd scratch you might get  but be aware that we hope that the kids will ( and should) get dirty!</p>
+					<p>Good luck!</p>
 				</div>
 				<a href="#" class="menu-nav-item" data-content-id="content-about">About</a>
 				<div class="menu-content-item" id="content-about">
-					<h2>The Wild Network</h2>
-					<p>Info here about TNW.</p>
+					<h2>Wild Time</h2>
+					<p>We love technology but there are amazing connections to be found outside in nature. So swap some screen time for some Wild Time.</p>
+					<p>Find time based wild things for you and your kids to do on your doorstep. Choose how much time you have to spare, find a wild thing to do. Get outside and do it.</p>
+					<p>Good luck.</p>
+					<h2>Project Wild Thing</h2>
+					<p>Project Wild Thing is a film led movement to get more kids playing freely outside and re-connecting with the natural world around them. The movement is a response to how disconnected UK children are becoming from nature and outdoor play.</p>
+					<p>Find out more and watch the film at <a href="http://www.projectwildthing.com">www.projectwildthing.com</a></p>
+					<p>We are powered by The Wild Network a growing network of charities and organisations committed to tackling the issues raised in the film. www.thewildnetwork.com</p>
 				</div>
 				<a href="#" class="menu-nav-item" data-content-id="content-credits">Credits</a>
 				<div class="menu-content-item" id="content-credits">
 					<h2>Credits</h2>
-					<p>Made by <a href="http://swarm.gd">Swarm</a> with <a href="http://madebyfieldwork.com">Fieldwork</a></p>
+					<p>Born at Good for Nothing, made by <a href="http://swarm.gd">SWARM</a> and <a href="http://madebyfieldwork.com">Fieldwork</a>
+					<p>Featuring content from the National Trust’s 50 things to do before you’re 11 ¾.</p>
+					<ul>
+						<li>The Woodland Trust</li>
+					</ul>
 				</div>
 			</nav>
-			<div id="wt-logo"><img src="images/wt-logo.svg"/></div>
+			<div id="wt-logo"><img src="images/wt-logo-fuzzy.svg"/></div>
 			<a href="#" id="menu-button"><img src="images/menu-button.svg"/></a>
-			<div id="grass-pattern"></div>
+			<!-- <div id="grass-pattern"></div> -->
 		</header>
 		
 		<div id="content">
@@ -82,7 +81,7 @@
 		{{#if activities.length}}
 			<ul class="links-sub-list" id="timeframe-nav-{{id}}">
 				{{#each activities}}
-					<li id="activity-{{this.id}}"><a data-activity-id="{{this.id}}" data-timeframe-id="{{this.timeframe_id}}" href="#">{{this.title}}</a></li>
+					<li id="activity-navitem-{{this.id}}"><a data-activity-id="{{this.id}}" data-timeframe-id="{{this.timeframe_id}}" href="#">{{this.title}}</a></li>
 				{{/each}}
 			</ul>
 		{{/if}}

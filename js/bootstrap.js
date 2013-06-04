@@ -6,17 +6,20 @@ $(function(){
 	
 	wildtime.init();
 	
-	$('#menu-button').on('click', function(e) {
+	$('#menu-button').on('tap, click', function(e) {
 		e.preventDefault();
 		var $menu = $('#menu');
 		if ($menu.css('display') === 'none') {
 			$menu.slideDown(300);
 		}
 		else {
-			$menu.slideUp(300);
+			$menu.slideUp(300, function() {
+				$('.menu-content-item').css({display: 'none'});
+				$('header').css({position: 'fixed'});
+			});
 		}
 	});
-	$('.menu-nav-item').on('click', function(e) {
+	$('.menu-nav-item').on('tap, click', function(e) {
 		e.preventDefault();
 		var $content = $('#' + $(this).data('contentId'));
 		if ($content.css('display') === 'none') {
@@ -29,24 +32,24 @@ $(function(){
 		}
 	});
 	
-	$('#content').on('click', '.links-list > li > a', function(e) {
+	$('#content').on('tap, click', '.links-list > li > a', function(e) {
 		e.preventDefault();
 		wildtime.transitions.toActivityNav($(this).data('timeframeId'));
 	});
 	
-	$('#content').on('click', '#back-to-timeframes', function(e) {
+	$('#content').on('tap, click', '#back-to-timeframes', function(e) {
 		e.preventDefault();
 		wildtime.transitions.toTimeframeNav();
 	});
 	$('#content').on('swipeRight', '#activities-nav', function(e) {
 		wildtime.transitions.toTimeframeNav();
 	});
-	$('#content').on('click', '#back-to-activities', function(e) {
+	$('#content').on('tap, click', '#back-to-activities', function(e) {
 		e.preventDefault();
 		wildtime.transitions.toActivityNav(wildtime.current_timeframe.id);
 	});
 	
-	$('#content').on('click', '.links-sub-list > li > a', function(e) {
+	$('#content').on('tap, click', '.links-sub-list > li > a', function(e) {
 		e.preventDefault();
 		wildtime.transitions.toActivities($(this).data('timeframeId'), $(this).data('activityId'));
 	});
@@ -54,18 +57,18 @@ $(function(){
 		wildtime.transitions.toActivities(wildtime.current_timeframe.id);
 	});
 	
-    $('#wt-logo').on('click', function(e) {
+    $('#wt-logo').on('tap, click', function(e) {
         e.preventDefault();
         wildtime.showNav();
     });
 /*
-	$('#content').on('click', '#back-to-timeframe', function(e) {
+	$('#content').on('tap, click', '#back-to-timeframe', function(e) {
 		e.preventDefault();
 		wildtime.showNav();
 	});
 */
 	
-	$('#content').on('click', '#activity-next', function(e) {
+	$('#content').on('tap, click', '#activity-next', function(e) {
 		e.preventDefault();
 		wildtime.nextActivity();
 	});
@@ -73,7 +76,7 @@ $(function(){
 		wildtime.nextActivity();
 	});
 	
-	$('#content').on('click', '#activity-prev', function(e) {
+	$('#content').on('tap, click', '#activity-prev', function(e) {
 		e.preventDefault();
 		wildtime.prevActivity();
 	});
@@ -161,10 +164,17 @@ var wildtime = {
 		html += activity_slider_nav({});
 		$('#activities-container').html(html);
 		wildtime.initActivitySliders();
+		fixSvgHeights();
+		
+/*
+		for (var i in wildtime.timeframes) {
+	console.log($('#activity-slider-' + i).height());
+		}
+*/
 	},
 	
 	initState: function() {
-		$('#timeframes-nav').css({height: Math.max($('#timeframes-nav .links-list').height(), window.innerHeight)});
+		wildtime.matchContentHeight($('#timeframes-nav .links-list'));
 	},
 	
 	initActivitySliders: function() {
@@ -208,14 +218,19 @@ var wildtime = {
 		var activity = wildtime.current_timeframe.activities[index];
 		var offset = index * (-100 / wildtime.current_timeframe.activities.length);
 		$('#activity-' + activity_id + ' img').css({visibility: 'visible'});
-		wildtime.matchContentHeight($('#activity-' + activity_id), 111);
 		if (no_animation) {
 			$('#activity-slider-' + activity.timeframe_id).css({'-webkit-transform': 'translate3d(' + offset + '%,0,0)'});
 			$current.find('img').css({visbilility: 'hidden'});
+			setTimeout(function() {
+				wildtime.matchContentHeight($('#activity-' + activity_id), 111);
+			}, 350);
+			wildtime.setNavArrows();
 		}
 		else {
 			$('#activity-slider-' + activity.timeframe_id).animate({'-webkit-transform': 'translate3d(' + offset + '%,0,0)'}, 300, 'ease-out', function() {
 				$current.find('img').css({visbilility: 'hidden'});
+				wildtime.matchContentHeight($('#activity-' + activity_id), 111);
+				wildtime.setNavArrows();
 			});
 		}
 		wildtime.current_activity_index = index;
@@ -236,21 +251,29 @@ var wildtime = {
 		},
 		
 		toActivityNav: function(timeframe_id) {
-			wildtime.matchContentHeight($('#timeframe-nav-' + timeframe_id));
+			
 			if (wildtime.current_timeframe && timeframe_id !== wildtime.current_timeframe.id) {
-				$('#timeframe-nav-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,-999em,0)'});
-				$('#activity-slider-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,-999em,0)'});
+				$('#timeframe-nav-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
+				$('#activity-slider-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
 			}
 			if (!wildtime.current_timeframe || timeframe_id !== wildtime.current_timeframe.id) {
-				$('#timeframe-nav-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)'});
-				$('#activity-slider-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)'});
+				$('#timeframe-nav-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
+				$('#activity-slider-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
 				wildtime.current_timeframe = wildtime.timeframes[timeframe_id];
 			}
-			$('#content').animate({'-webkit-transform': 'translate3d(-25%,0,0)'}, 240, 'ease-out');
+			$('#content').animate({'-webkit-transform': 'translate3d(-25%,0,0)'}, 240, 'ease-out', function() {
+				wildtime.matchContentHeight($('#timeframe-nav-' + timeframe_id), 111);
+			});
 		},
 		
 		toActivities: function(timeframe_id, activity_id) {
-			$('#content').animate({'-webkit-transform': 'translate3d(-50%,0,0)'}, 240, 'ease-out');
+			$('#activity-prev, #activity-next').css({opacity: 0});
+			$('#content').animate({'-webkit-transform': 'translate3d(-50%,0,0)'}, 240, 'ease-out', function() {
+				setTimeout(function() {
+					wildtime.setNavArrows();
+					$('#activity-prev, #activity-next').animate({opacity: 1});
+				}, 400);
+			});
 			wildtime.current_timeframe = wildtime.timeframes[timeframe_id];
 			if (!activity_id) {
 				activity_id = wildtime.current_timeframe.activities[0].id;
@@ -260,9 +283,24 @@ var wildtime = {
 			
 	},
 	
+	setNavArrows: function() {
+		if (wildtime.current_activity_index === 0) {
+			$('#activity-prev').addClass('disabled');
+		}
+		else {
+			$('#activity-prev').removeClass('disabled');
+		}	
+		if (wildtime.current_activity_index >= wildtime.current_timeframe.activities.length - 1) {
+			$('#activity-next').addClass('disabled');
+		}
+		else {
+			$('#activity-next').removeClass('disabled');
+		}
+	},
+	
 	matchContentHeight: function($to_this, add_this) {
 		add_this = (add_this) ? add_this : 0;
-		$('#content').css({height: Math.max($to_this.height(), window.innerHeight) + add_this});
+		$('#content').animate({height: Math.max($to_this.height() + add_this, window.innerHeight)}, 100);
 	}
 	
 }
@@ -375,16 +413,27 @@ function fixSvgHeights() {
 
 function fixSvgHeight(el) {
 	$(el).one('load', function() {
+/*
 		var settings = {
 			position: $(el).css('position'),
 			top: $(el).css('top'),
 			display: $(el).css('display')
 		}
-		$(el).css({position: 'absolute', top: '-999em', display: 'block'});
+		$(el).css({position: 'absolute', top: '-999em', display: 'block', visibility: 'visible'});
 		var w = $(el).width(),
 			h = $(el).height(),
 			ratio = w / h;
+console.log('width: ' + w);
 		$(el).css({position: settings.position, top: settings.top, display: settings.display, width: (w / ratio) + 'px'});
+		$(el).css({width: Math.floor(w / ratio) + 'px'});
+		$(el).css({width: Math.floor(w) + 'px'});
+*/
+		$copy = $(el).clone();
+		$copy.css({position: 'absolute', top: '-999em', display: 'block', visibility: 'visible'}).appendTo('body');
+		var w = $copy.width(),
+			h = $copy.height(),
+			ratio = w / h;
+/* 		$(el).css({position: settings.position, top: settings.top, display: settings.display, width: (w / ratio) + 'px'}); */
 		$(el).css({width: Math.floor(w / ratio) + 'px'});
 		$(el).css({width: Math.floor(w) + 'px'});
 	}).each(function() {
