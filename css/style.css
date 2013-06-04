@@ -242,7 +242,8 @@ html, body, #app {
 /* 	height: 100%; */
 	width: 100%;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	overflow: hidden;
+	overflow-x: hidden;
+	background: rgb(206,220,0);
 }
 
 body {
@@ -251,7 +252,10 @@ body {
 
 
 #app {
-/* 	overflow: hidden; */
+	/*
+overflow-x: hidden;
+	overflow-y: visible;
+*/
 }
 
 
@@ -527,8 +531,7 @@ header {
 }
 #activity-prev.disabled,
 #activity-next.disabled {
-	background-color: rgba(107,128,58,0.3);
-	background-color: rgba(196,214,0,0.3);
+	display: none;
 }
 #activity-prev {
 	background-image:url(../images/arrow-prev.svg);

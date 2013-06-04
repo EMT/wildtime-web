@@ -216,10 +216,10 @@ var wildtime = {
 		var $current = $('#activity-' + wildtime.current_activity_id);
 		var index = $('#activity-' + activity_id).index();
 		var activity = wildtime.current_timeframe.activities[index];
-		var offset = index * (-100 / wildtime.current_timeframe.activities.length);
+		var offset = index * $('#activity-' + activity_id).width();
 		$('#activity-' + activity_id + ' img').css({visibility: 'visible'});
 		if (no_animation) {
-			$('#activity-slider-' + activity.timeframe_id).css({'-webkit-transform': 'translate3d(' + offset + '%,0,0)'});
+			$('#activity-slider-' + activity.timeframe_id).css({'-webkit-transform': 'translate3d(-' + offset + 'px,0,0)'});
 			$current.find('img').css({visbilility: 'hidden'});
 			setTimeout(function() {
 				wildtime.matchContentHeight($('#activity-' + activity_id), 111);
@@ -227,7 +227,7 @@ var wildtime = {
 			wildtime.setNavArrows();
 		}
 		else {
-			$('#activity-slider-' + activity.timeframe_id).animate({'-webkit-transform': 'translate3d(' + offset + '%,0,0)'}, 300, 'ease-out', function() {
+			$('#activity-slider-' + activity.timeframe_id).animate({'-webkit-transform': 'translate3d(-' + offset + 'px,0,0)'}, 300, 'ease-out', function() {
 				$current.find('img').css({visbilility: 'hidden'});
 				wildtime.matchContentHeight($('#activity-' + activity_id), 111);
 				wildtime.setNavArrows();
@@ -251,7 +251,7 @@ var wildtime = {
 		},
 		
 		toActivityNav: function(timeframe_id) {
-			
+			$('html, body, #app').css({backgroundColor: 'rgb(206,220,0)'});
 			if (wildtime.current_timeframe && timeframe_id !== wildtime.current_timeframe.id) {
 				$('#timeframe-nav-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
 				$('#activity-slider-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
@@ -267,6 +267,7 @@ var wildtime = {
 		},
 		
 		toActivities: function(timeframe_id, activity_id) {
+			$('html, body, #app').css({backgroundColor: 'rgb(105,129,60)'});
 			$('#activity-prev, #activity-next').css({opacity: 0});
 			$('#content').animate({'-webkit-transform': 'translate3d(-50%,0,0)'}, 240, 'ease-out', function() {
 				setTimeout(function() {
