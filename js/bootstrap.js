@@ -98,6 +98,7 @@ $(function(){
 	
 	
 	// Set state handlers for content slider
+/*
 	if (stateHandler.supported()) {
 		stateHandler.replace(document.title, wildtime.current_timeframe.id, wildtime.current_activity_id);
 		stateHandler.onPop(function(event) {
@@ -106,6 +107,7 @@ $(function(){
 			}
 		});
 	}
+*/
 	
 	
 	
@@ -133,8 +135,8 @@ $(function(){
 
 var wildtime = {
 
-	url_base: 'http://api.wildtime.dev',
-	//url_base: 'http://wtapi.madebyfieldwork.com',
+	//url_base: 'http://api.wildtime.dev',
+	url_base: 'http://wtapi.madebyfieldwork.com',
 	
 	timeframes: null,
 	current_timeframe: null,
