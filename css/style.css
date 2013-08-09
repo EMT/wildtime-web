@@ -555,6 +555,25 @@ figure img {
 	visibility: hidden;
 }
 
+
+.share-buttons {
+	list-style: none;
+	padding-bottom: 2em;
+}
+#content .share-buttons li {
+	margin-bottom: 0.4em;
+}
+#content .share-buttons a {
+	display: block;
+	color: rgb(18,72,72);
+	background: rgba(255,247,225,0.6);
+	padding: 0.4em 0.6em;
+	border-radius: 3px;
+}
+#content .share-buttons a:hover {
+	background: rgba(255,247,225,0.8);
+}
+
 /* ==|== media queries ======================================================
 
    ========================================================================== */

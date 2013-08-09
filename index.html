@@ -47,9 +47,10 @@
 				<a href="#" class="menu-nav-item" data-content-id="content-credits">Credits</a>
 				<div class="menu-content-item" id="content-credits">
 					<h2>Credits</h2>
-					<p>Born at Good for Nothing, made by <a href="http://swarm.gd">SWARM</a> and <a href="http://madebyfieldwork.com">Fieldwork</a>
-					<p>Featuring ideas and activities from the National Trust’s 50 things to do before you’re 11 ¾.</p>
+					<p>Born at Good for Nothing, made by <a href="http://swarm.gd">SWARM</a> and <a href="http://madebyfieldwork.com">Fieldwork</a>, and backed by The Wild Network.</p>
+					<p>Featuring ideas and activities from:</p>
 					<ul>
+						<li>National Trust’s 50 things to do before you’re 11 ¾</li>
 						<li>RSPB</li>
 						<li>The Woodland Trust’s Nature Detectives</li>
 						<li>Plant Science</li>
@@ -117,6 +118,10 @@
 					<figure><img src="{{image_url}}" alt="{{title}}" /></figure>
 				{{/if}}
 				{{{paragraphs text}}}
+				<ul class="share-buttons">
+					<li><a href="{{twitterUrl this}}">Share via Twitter</a></li>
+					<li><a href="{{facebookUrl this}}">Share via Facebook</a></li>
+				</ul>
 			</div>
 		</div>
 	</script>
@@ -130,9 +135,8 @@
 	<script src="js/zepto.touch.min.js"></script>
 	<script src="js/handlebars.js"></script>
 	<script src="js/bootstrap.js"></script>
-	
-</body>
-</html>
+	<script src="cordova-2.7.0.js"></script>
+	<script src="js/index.js"></script>
 	
 </body>
 </html>

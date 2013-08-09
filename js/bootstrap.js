@@ -3,6 +3,12 @@
 	
 
 $(function(){
+
+	/* app.initialize(); */
+	
+	document.addEventListener('deviceready', function() {
+		wildtime.init();
+	}, false);
 	
 	wildtime.init();
 	
@@ -89,7 +95,37 @@ $(function(){
 		}
 	});
 	
+	
+	
+	// Set state handlers for content slider
+	if (stateHandler.supported()) {
+		stateHandler.replace(document.title, wildtime.current_timeframe.id, wildtime.current_activity_id);
+		stateHandler.onPop(function(event) {
+			if (event.state.activity_id) {
+				wildtime.goToActivity(event.state.activity_id);
+			}
+		});
+	}
+	
+	
+	
 	fixSvgHeights();
+	
+/*
+	wildtime.doOnShake(function() {
+		wildtime.goToActivity(1281);
+	});
+*/
+
+
+/* 	wildtime.transitions.toActivities(timeframe_id, activity_id); */
+
+
+	$('#content').on('click', '.activity a', function(e) {
+		e.preventDefault();
+		window.open($(this).attr('href'), '_blank', 'location=yes');
+	});
+	
 	
 });
 
@@ -97,8 +133,8 @@ $(function(){
 
 var wildtime = {
 
-	//url_base: 'http://api.wildtime.dev',
-	url_base: 'http://wtapi.madebyfieldwork.com',
+	url_base: 'http://api.wildtime.dev',
+	//url_base: 'http://wtapi.madebyfieldwork.com',
 	
 	timeframes: null,
 	current_timeframe: null,
@@ -111,6 +147,14 @@ var wildtime = {
 			wildtime.initActivitiesNav();
 			wildtime.initActivities();
 			wildtime.initState();
+			
+/*
+			wildtime.doOnShake(function() {
+				wildtime.setTimeframe(wildtime.timeframes[122].id);
+				wildtime.transitions.toActivities(
+					wildtime.timeframes[122].id, wildtime.timeframes[122].activities[2].id);
+			});
+*/
 		});
 	},
 	
@@ -242,6 +286,18 @@ var wildtime = {
 			callback(data);
 		});
 	},
+	
+	setTimeframe: function(timeframe_id) {
+		if (wildtime.current_timeframe && timeframe_id !== wildtime.current_timeframe.id) {
+			$('#timeframe-nav-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
+			$('#activity-slider-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
+		}
+		if (!wildtime.current_timeframe || timeframe_id !== wildtime.current_timeframe.id) {
+			$('#timeframe-nav-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
+			$('#activity-slider-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
+			wildtime.current_timeframe = wildtime.timeframes[timeframe_id];
+		}
+	},
 
 	transitions: {
 	
@@ -252,15 +308,7 @@ var wildtime = {
 		
 		toActivityNav: function(timeframe_id) {
 			$('html, body, #app').css({backgroundColor: 'rgb(206,220,0)'});
-			if (wildtime.current_timeframe && timeframe_id !== wildtime.current_timeframe.id) {
-				$('#timeframe-nav-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
-				$('#activity-slider-' + wildtime.current_timeframe.id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'none'});
-			}
-			if (!wildtime.current_timeframe || timeframe_id !== wildtime.current_timeframe.id) {
-				$('#timeframe-nav-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
-				$('#activity-slider-' + timeframe_id).css({'-webkit-transform': 'translate3d(0,0,0)', display: 'block'});
-				wildtime.current_timeframe = wildtime.timeframes[timeframe_id];
-			}
+			wildtime.setTimeframe(timeframe_id);
 			$('#content').animate({'-webkit-transform': 'translate3d(-25%,0,0)'}, 240, 'ease-out', function() {
 				wildtime.matchContentHeight($('#timeframe-nav-' + timeframe_id), 111);
 			});
@@ -302,13 +350,41 @@ var wildtime = {
 	matchContentHeight: function($to_this, add_this) {
 		add_this = (add_this) ? add_this : 0;
 		$('#content').animate({height: Math.max($to_this.height() + add_this, window.innerHeight)}, 100);
+	},
+	
+	
+	doOnShake: function(do_this) {
+		var success = function() {
+			var max = 2;
+			if (Math.abs(coords.x) > max || Math.abs(coords.y) > max || Math.abs(coords.z) > max) {
+				do_this();
+			}
+		};
+		var error = function() {};
+		var options = {
+			frequency: 100
+		};
+		if (navigator.accelerometer) {
+			navigator.accelerometer.watchAcceleration(success, error, options);
+		}
+		else {
+/* 			alert('no accelerometer'); */
+		}
 	}
 	
 }
 
 
 Handlebars.registerHelper('paragraphs', function(text) {
-  return '<p>' + text.replace("\n\r", "\n").replace("\n", '<\p><p>') + '</p>';
+  return '<p>' + text.replace("v\n\r", "\n").replace(/\n/g, '<\p><p>') + '</p>';
+});
+
+Handlebars.registerHelper('twitterUrl', function(activity) {
+  return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('I just did ' + activity.title + ' #projectwildthing #wildtime') + '&related=wearewildthing&url=' + encodeURIComponent('http://wildtime.projectwildthing.com/activities/' + activity.id);
+});
+
+Handlebars.registerHelper('facebookUrl', function(activity) {
+  return 'https://www.facebook.com/dialog/feed?picture=' + encodeURIComponent(activity.image_url) + '&name=' + encodeURIComponent('I just did ' + activity.title + ' #projectwildthing #wildtime') + '&link=' + encodeURIComponent('http://wildtime.projectwildthing.com/activities/' + activity.id) + '&app_id=121611894712240&redirect_uri=' + encodeURIComponent('http://wildtime.projectwildthing.com/activities/' + activity.id);
 });
 
 
@@ -442,6 +518,45 @@ console.log('width: ' + w);
 			$(this).trigger('load');
 		}
 	});
+	
+}
+
+
+
+var stateHandler = {
+
+	supported: function() {
+		return (typeof history.pushState === 'function');
+	},
+	
+	replace: function(title, timeframe_id, activity_id) {
+		history.replaceState({
+			title: title,
+			timeframe_id: timeframe_id,
+			activity_id: activity_id,
+			slug: location.pathname.replace('/', '')
+		}, null, null);
+	},
+	
+	push: function(slug, title, timeframe_id, activity_id) {
+		history.pushState({
+			title: title,
+			timeframe_id: timeframe_id,
+			activity_id: activity_id,
+			slug: slug
+		}, null, slug);
+		document.title = title;
+	},
+	
+	onPop: function(callback) {
+		window.onpopstate = function(event) {
+			if (event.state == null) {
+				return;
+			}
+			document.title = event.state.title;
+			callback(event);
+		};
+	}
 	
 }
 
